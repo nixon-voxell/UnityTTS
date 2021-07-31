@@ -1,4 +1,4 @@
-# End to end Speech Engine In Unity
+# Text to Speech In Unity
 
 > Important! The current model (fastspeech) does not work well with short phrases. (e.g. "hi", "how are you", etc.)
 
