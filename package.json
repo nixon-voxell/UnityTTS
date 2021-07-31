@@ -1,0 +1,25 @@
+{
+  "name": "voxell.speech",
+  "displayName": "VX Speech Engine",
+  "author": "Nixon",
+  "description": "Speech functionality for Unity (TTS and ASR).",
+  "keywords": [
+    "speech",
+    "voxell"
+  ],
+  "license": "GPL v3.0",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "version": "0.2.2",
+  "dependencies": {
+    "voxell.util": "1.1.1",
+    "com.github.asus4.tflite": "2.4.1"
+  },
+  "samples": [
+    {
+      "displayName": "SpeechExample",
+      "description": "TTS and ASR examples",
+      "path": "Samples/SpeechExample"
+    }
+  ]
+}
