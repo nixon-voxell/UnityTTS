@@ -20,7 +20,6 @@ All rights reserved.
 using TMPro;
 using UnityEngine;
 
-
 namespace Voxell.Speech.TTS.Demo
 {
   public class TTSDemo : MonoBehaviour
@@ -31,9 +30,6 @@ namespace Voxell.Speech.TTS.Demo
     public void SpeakInput() => textToSpeech.Speak(inputField.text);
 
     void OnDisable()
-    {
-      textToSpeech.Dispose();
-      print("Disposed tts interpreters");
-    }
+      => textToSpeech.Dispose();
   }
 }
