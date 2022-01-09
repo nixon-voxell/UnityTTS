@@ -55,7 +55,7 @@ namespace Voxell.Speech.TTS
         if (_ShouldKeepSymbol(l))
         {
           try { sequence.Add(_mapper.symbol_to_id[l.ToString()]); }
-          catch { logger.ConditionalLog($"Symbol not in dictionary: {l}", LogImportance.Critical, LogType.Warning); }
+          catch { Debug.LogWarning($"Symbol not in dictionary: {l}"); }
         }
       }
 
