@@ -10,7 +10,7 @@
   "license": "Apache 2.0",
   "unity": "2019.4",
   "unityRelease": "0f1",
-  "version": "0.2.2",
+  "version": "0.0.1",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
     "voxell.util": "1.4.0",
