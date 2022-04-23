@@ -12,7 +12,8 @@
   "unityRelease": "0f1",
   "version": "0.2.2",
   "dependencies": {
-    "voxell.util": "1.1.1",
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "voxell.util": "1.4.0",
     "com.github.asus4.tflite": "2.4.1"
   },
   "samples": [

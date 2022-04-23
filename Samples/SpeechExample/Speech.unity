@@ -1071,10 +1071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d12b5d1a7630c4e9cdd46a260ec6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 068597a3453657b48a166d4c914f06d4, type: 3}
-  recognized: 0
-  recognizedWords: 
-  deepspeech: {fileID: 0}
 --- !u!1 &1441786684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,10 +1314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1599897167}
-  logger:
-    debugLevel: 0
-  fastspeech: {fileID: 6291765082664782628, guid: bd2d8e5373079874fb9ceec54731468a, type: 3}
-  melgan: {fileID: 6291765082664782628, guid: a13a439f9008c914488e378509fa16ca, type: 3}
+  fastspeech: Models/fastspeech_quant.tflite
+  melgan: Models/melgan_quant.tflite
   speakerID: 1
   speedRatio: 1
   mapper: {fileID: 4900000, guid: 0a6dfc20c2782bc4185aa8a88caa8501, type: 3}

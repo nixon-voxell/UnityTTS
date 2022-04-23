@@ -20,14 +20,15 @@ All rights reserved.
 using TensorFlowLite;
 using System;
 using UnityEngine;
-using Voxell.DeepLearning;
 
 namespace Voxell.Speech.TTS
 {
+  using Inspector;
+
   public partial class TextToSpeech : System.IDisposable
   {
-    public TFLiteAsset fastspeech;
-    public TFLiteAsset melgan;
+    [StreamingAssetFilePath] public string fastspeech;
+    [StreamingAssetFilePath] public string melgan;
     [Tooltip("The ID of the speaker, currently will not affect the speech yet.")]
     public int speakerID = 1;
     [Range(0.0f, 1.0f), Tooltip("The lower, the faster the speed!")]
@@ -43,8 +44,8 @@ namespace Voxell.Speech.TTS
     void InitTTSInference()
     {
       _options = new InterpreterOptions() {threads = 4};
-      _fastspeechInterpreter = new Interpreter(fastspeech.data, _options);
-      _melganInterpreter = new Interpreter(melgan.data, _options);
+      _fastspeechInterpreter = new Interpreter(FileUtilx.ReadStreamingAssetFileByte(fastspeech), _options);
+      _melganInterpreter = new Interpreter(FileUtilx.ReadStreamingAssetFileByte(melgan), _options);
     }
 
     #region Inferencing
