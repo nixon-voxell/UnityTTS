@@ -18,9 +18,9 @@
   },
   "samples": [
     {
-      "displayName": "SpeechExample",
-      "description": "TTS Examples",
-      "path": "Samples/SpeechExample"
+      "displayName": "Speech Example",
+      "path": "Samples~/Speech Example"
     }
-  ]
+  ],
+  "hideInEditor": false
 }
