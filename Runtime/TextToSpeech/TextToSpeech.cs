@@ -52,11 +52,13 @@ namespace Voxell.Speech.TTS
 
     void OnDisable()
     {
-      _speakThread?.Abort();
+      _speakThread?.Join();
+      Dispose();
     }
 
     public void Speak(string text)
     {
+      _speakThread?.Join();
       _speakThread = new Thread(new ParameterizedThreadStart(SpeakTask));
       _speakThread.Start(text);
     }
