@@ -4,6 +4,8 @@
 
 This package provides a fully functional cross platform Text To Speech engine using deep learning models integrated in Unity with C#!
 
+You can find the example repository [here](https://github.com/nixon-voxell/UnityTTSExamples).
+
 - [Text to Speech In Unity](#text-to-speech-in-unity)
   - [Text To Speech](#text-to-speech)
   - [Installation](#installation)
