@@ -13,7 +13,7 @@
   "version": "0.0.1",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
-    "voxell.util": "1.4.0",
+    "voxell.util": "1.4.2",
     "com.github.asus4.tflite": "2.4.1"
   },
   "samples": [
