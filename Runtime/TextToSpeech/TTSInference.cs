@@ -100,8 +100,10 @@ namespace Voxell.Speech.TTS
 
     public void Dispose()
     {
-      _fastspeechInterpreter.Dispose();
-      _melganInterpreter.Dispose();
+      // null check before disposing to prevent unity crashing
+      _fastspeechInterpreter?.Dispose();
+      _melganInterpreter?.Dispose();
+      _options?.Dispose();
     }
   }
 }

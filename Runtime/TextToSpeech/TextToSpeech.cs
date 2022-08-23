@@ -31,7 +31,7 @@ namespace Voxell.Speech.TTS
       }
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
       _speakThread?.Join();
       Dispose();
