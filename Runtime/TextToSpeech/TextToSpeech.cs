@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace Voxell.Speech.TTS
 {
@@ -9,27 +9,10 @@ namespace Voxell.Speech.TTS
         public AudioSource audioSource;
         public Logger logger;
 
-        private int sampleLength;
-        private float[] _audioSample;
-        private AudioClip _audioClip;
-
-        private bool _playAudio = false;
-
         void Start()
         {
             InitTTSProcessor();
             InitTTSInference();
-        }
-
-        void Update()
-        {
-            if (_playAudio)
-            {
-                _audioClip = AudioClip.Create("Speak", sampleLength, 1, 22050, false);
-                _audioClip.SetData(_audioSample, 0);
-                audioSource.PlayOneShot(_audioClip);
-                _playAudio = false;
-            }
         }
 
         void OnDestroy()
@@ -37,22 +20,31 @@ namespace Voxell.Speech.TTS
             Dispose();
         }
 
-        public Task Speak(string text) => Task.Run(() => SpeakTask(text));
+        public Task Speak(string text, float volume = 1f) => Task.Run(() => SpeakTask(text, volume));
 
-        private void SpeakTask(string text)
+        private void SpeakTask(string text, float volume)
         {
             CleanText(ref text);
             var inputIDs = TextToSequence(text);
             var fastspeechOutput = FastspeechInference(ref inputIDs);
             var melganOutput = MelganInference(ref fastspeechOutput);
 
-            sampleLength = melganOutput.GetLength(1);
-            _audioSample = new float[sampleLength];
+            var sampleLength = melganOutput.GetLength(1);
+            var audioSample = new float[sampleLength];
 
             for (int s = 0; s < sampleLength; s++) 
-                _audioSample[s] = melganOutput[0, s, 0];
+                audioSample[s] = melganOutput[0, s, 0];
 
-            _playAudio = true;
+            UniTask.Post(async () =>
+            {
+                var audioClip = AudioClip.Create("Speak", sampleLength, 1, 22050, false);
+                    audioClip.SetData(audioSample, 0);
+                audioSource.PlayOneShot(audioClip);
+
+                await UniTask.Delay(sampleLength / 22050);
+
+                Destroy(audioClip);
+            });
         }
 
         public void CleanText(ref string text)
