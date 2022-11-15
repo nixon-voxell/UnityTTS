@@ -40,6 +40,7 @@
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0",
     "com.unity.nuget.newtonsoft-json": "3.0.2"
+	"com.cysharp.unitask": "2.3.3"
   },
   "scopedRegistries": [
     {
@@ -47,6 +48,7 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.github.asus4.tflite",
+		"com.cysharp.unitask",
         "com.openupm"
       ]
     }
