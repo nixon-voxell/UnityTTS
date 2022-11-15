@@ -46,10 +46,12 @@ namespace Voxell.Speech.TTS
                 audioSource.volume = volume;
                 audioSource.PlayOneShot(audioClip);
 
-                await UniTask.Delay(sampleLength / 22050);
+                var audioDuration = sampleLength * 1000 / 22050;
+                Debug.Log($"Duration = {audioDuration} ms");
+                await UniTask.Delay(audioDuration);
 
                 Destroy(audioClip);
-                Destroy(audioSource);
+                Destroy(audioSource.gameObject);
 
                 completed = true;
             });
