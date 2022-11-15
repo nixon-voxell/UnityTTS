@@ -42,7 +42,7 @@ namespace Voxell.Speech.TTS
                 var audioClip = AudioClip.Create("Speak", sampleLength, 1, 22050, false);
                     audioClip.SetData(audioSample, 0);
 
-                var audioSource = GameObject.Instantiate(audioSourceRef, transform);
+                var audioSource = GameObject.Instantiate(audioSourceRef.gameObject, transform).GetComponent<AudioSource>();
                 audioSource.volume = volume;
                 audioSource.PlayOneShot(audioClip);
 
