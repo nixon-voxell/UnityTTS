@@ -1,5 +1,5 @@
 {
-  "name": "voxell.speech",
+  "name": "com.github.voxell.speech",
   "displayName": "VX Speech Engine",
   "author": "Nixon",
   "description": "Speech functionality for Unity (TTS and ASR).",
@@ -10,11 +10,11 @@
   "license": "Apache 2.0",
   "unity": "2019.4",
   "unityRelease": "0f1",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
-    "voxell.util": "1.4.2",
-    "com.github.asus4.tflite": "2.4.1"
+    "com.github.asus4.tflite": "2.4.1",
+	"com.github.voxell.unityutil": "1.5.0"
   },
   "samples": [
     {
@@ -22,5 +22,16 @@
       "path": "Samples~/Speech Example"
     }
   ],
-  "hideInEditor": false
+  "hideInEditor": false,
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.github.asus4.tflite",
+        "com.github.voxell.unity.util",
+        "com.openupm"
+      ]
+    }
+  ]  
 }
