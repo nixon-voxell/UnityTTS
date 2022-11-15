@@ -22,7 +22,7 @@ namespace Voxell.Speech.TTS
 
         public Task Speak(string text, float volume = 1f) => Task.Run(() => SpeakTask(text, volume));
 
-        private void SpeakTask(string text, float volume)
+        private async Task SpeakTask(string text, float volume)
         {
             CleanText(ref text);
             var inputIDs = TextToSequence(text);
@@ -36,7 +36,7 @@ namespace Voxell.Speech.TTS
                 audioSample[s] = melganOutput[0, s, 0];
 
             volume = Mathf.Min(0f, Mathf.Max(1f, volume));
-
+            var completed = false;
             UniTask.Post(async () =>
             {
                 var audioClip = AudioClip.Create("Speak", sampleLength, 1, 22050, false);
@@ -50,7 +50,11 @@ namespace Voxell.Speech.TTS
 
                 Destroy(audioClip);
                 Destroy(audioSource);
+
+                completed = true;
             });
+            while (!completed)
+                await Task.Yield();
         }
 
         public void CleanText(ref string text)
