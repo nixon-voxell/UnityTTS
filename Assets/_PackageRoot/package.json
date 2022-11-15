@@ -14,7 +14,6 @@
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
     "com.github.asus4.tflite": "2.4.1",
-	"com.github.voxell.unityutil": "1.5.0"
   },
   "samples": [
     {
@@ -29,7 +28,6 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.github.asus4.tflite",
-        "com.github.voxell.unity.util",
         "com.openupm"
       ]
     }
