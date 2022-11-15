@@ -22,16 +22,14 @@ To prevent Unity from freezing when inferencing the TFLite model, we run the inf
 
 ## Installation
 
+- Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
+- Run command in your project folder `openupm add com.github.voxell.unitytts`
+
 External dependencies:
 
-- voxell.util ([UnityUtil](https://github.com/voxell-tech/UnityUtil))
-- com.github.asus4.tflite ([UnityTFLite](https://github.com/asus4/tf-lite-unity-sample/tree/master/Packages/com.github.asus4.tflite))
-
-1. Clone the [UnityUtil](https://github.com/voxell-tech/UnityUtil) repository into your `Packages` folder.
-2. Add TFLite package via "add package from git URL" selection in the package manager using this link: https://github.com/asus4/tf-lite-unity-sample.git?path=/Packages/com.github.asus4.tflite
-3. Clone this repository into your `Packages` folder.
-4. Download the TFLite models from [Google Drive](https://drive.google.com/drive/u/0/folders/1--j-eDXKdtDcm5-Z7bnSTeVFWnKoHOER) and import them into Unity (place them inside the `Assets/StreamingAssets` folder).
-5. And you are ready to go!
+1. Download the TFLite models from [Google Drive](https://drive.google.com/drive/u/0/folders/1--j-eDXKdtDcm5-Z7bnSTeVFWnKoHOER) and import them into Unity (place them inside the `Assets/StreamingAssets` folder).
+2. mapper file should be moved oustide `Assets/StreamingAssets`
+3. And you are ready to go!
 
 ## Support the project!
 
