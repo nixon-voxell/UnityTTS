@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Voxell.Speech.Common;
 
 namespace Voxell.Speech.TTS
 {
@@ -24,7 +25,7 @@ namespace Voxell.Speech.TTS
 
         private async Task SpeakTask(string text, float volume)
         {
-            CleanText(ref text);
+            text = CleanText(text);
             var inputIDs = TextToSequence(text);
             var fastspeechOutput = FastspeechInference(ref inputIDs);
             var melganOutput = MelganInference(ref fastspeechOutput);
@@ -59,10 +60,11 @@ namespace Voxell.Speech.TTS
                 await Task.Yield();
         }
 
-        public void CleanText(ref string text)
+        public string CleanText(string text)
         {
             text = text.ToLower();
-            NumberToWords.CleanText(ref text);
+            text = NumberToWords.CleanText(text);
+            return text;
         }
     }
 }

@@ -21,20 +21,21 @@ using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace Voxell.Speech
+namespace Voxell.Speech.Common
 {
-    static class NumberToWords
+    public static class NumberToWords
     {
         static string[] unitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
         static string[] tensMap = new[] { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
 
-        public static void CleanText(ref string text)
+        public static string CleanText(string text)
         {
             text = text.ToLower();
             text = ToWords(text);
+            return text;
         }
 
-        static string ToWords(string text)
+        public static string ToWords(string text)
         {
             var match = Regex.Match(text, @"-?\d+");
             while (match.Success)

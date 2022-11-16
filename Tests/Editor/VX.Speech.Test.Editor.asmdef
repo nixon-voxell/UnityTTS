@@ -1,0 +1,18 @@
+{
+    "name": "VX.Speech.Test.Editor",
+    "rootNamespace": "",
+    "references": [
+        "VX.Speech.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
