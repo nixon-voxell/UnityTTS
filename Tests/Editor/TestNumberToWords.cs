@@ -28,5 +28,12 @@ public class TestNumberToWords
     [Test] public void _15000_15999() => TestRange(15000, 15999);
     [Test] public void _1000000_1010000() => TestRange(1000000, 1010000);
 
+    [Test] public void _123123123() => TestNumber(123123123);
+    [Test] public void _456456456() => TestNumber(456456456);
+    [Test] public void _111111111() => TestNumber(111111111);
+    [Test] public void _222222222() => TestNumber(222222222);
+    [Test] public void _333333333() => TestNumber(333333333);
+    [Test] public void _444444444() => TestNumber(444444444);
+
     [Test] public void _15999_15000() => TestRange(-15999, -15000);
 }

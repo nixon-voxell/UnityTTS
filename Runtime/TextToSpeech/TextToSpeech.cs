@@ -8,7 +8,6 @@ namespace Voxell.Speech.TTS
     public partial class TextToSpeech : MonoBehaviour
     {
         public AudioSource audioSourceRef;
-        public Logger logger;
 
         void Start()
         {
@@ -36,7 +35,7 @@ namespace Voxell.Speech.TTS
             for (int s = 0; s < sampleLength; s++) 
                 audioSample[s] = melganOutput[0, s, 0];
 
-            volume = Mathf.Min(0f, Mathf.Max(1f, volume));
+            volume = Mathf.Min(1f, Mathf.Max(0f, volume));
             var completed = false;
             UniTask.Post(async () =>
             {
@@ -44,11 +43,12 @@ namespace Voxell.Speech.TTS
                     audioClip.SetData(audioSample, 0);
 
                 var audioSource = GameObject.Instantiate(audioSourceRef.gameObject, transform).GetComponent<AudioSource>();
-                audioSource.volume = volume;
-                audioSource.PlayOneShot(audioClip);
+                    audioSource.volume = volume;
+                    audioSource.clip = audioClip;
+                    audioSource.Play();
 
                 var audioDuration = sampleLength * 1000 / 22050;
-                Debug.Log($"Duration = {audioDuration} ms");
+                Debug.Log($"Duration = {audioDuration} ms, Volume = {volume}");
                 await UniTask.Delay(audioDuration);
 
                 Destroy(audioClip);
