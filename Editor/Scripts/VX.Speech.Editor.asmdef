@@ -1,9 +1,8 @@
 {
-    "name": "VX.Speech.Runtime",
+    "name": "VX.Speech.Editor",
     "rootNamespace": "",
     "references": [
-        "TensorFlowLite",
-        "UniTask"
+        "VX.Speech.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
