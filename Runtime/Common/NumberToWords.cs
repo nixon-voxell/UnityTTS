@@ -18,70 +18,80 @@ All rights reserved.
 */
 
 using System;
+using System.Text.RegularExpressions;
+using UnityEngine;
 
-namespace Voxell.Speech
+namespace Voxell.Speech.Common
 {
-  class NumberToWords
-  {
-    private static string[] units = {"zero", "one", "two", "three",
-    "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
-    "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-    "seventeen", "eighteen", "nineteen"};
-    private static string[] tens = {"", "", "twenty", "thirty", "forty",
-    "fifty", "sixty", "seventy", "eighty", "ninety"};
-    
-    public static string ConvertAmount(double amount)
+    public static class NumberToWords
     {
-      // try
-      // {
-        Int64 amount_int = (Int64)amount;
-        Int64 amount_dec = (Int64)Math.Round((amount - (double)(amount_int)) * 100);
-        if (amount_dec == 0)
+        static string[] unitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+        static string[] tensMap = new[] { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+
+        public static string CleanText(string text)
         {
-          return Convert(amount_int);
+            text = text.ToLower();
+            text = ToWords(text);
+            return text;
         }
-        else  
+
+        public static string ToWords(string text)
         {
-          return Convert(amount_int) + " point " + Convert(amount_dec);
+            var match = Regex.Match(text, @"-?\d+");
+            while (match.Success)
+            {
+                var number = Int32.Parse(match.Value);
+                var words = Convert(number);
+
+                text = match.Result(words);
+                match = Regex.Match(text, @"-?\d+");
+            }
+            return text;
         }
-      // }
-      // catch (Exception e)
-      // {
-      //   // tODO: handle exception
-      //   Debug.LogError(e);
-      // }
-      // return "";
+        static string Convert(int number)
+        {
+            if (number == 0)
+                return "zero";
+
+            if (number < 0)
+                return "minus " + Convert(Mathf.Abs(number));
+
+            string words = "";
+
+            if ((number / 1000000) > 0)
+            {
+                words += Convert(number / 1000000) + " million ";
+                number %= 1000000;
+            }
+
+            if ((number / 1000) > 0)
+            {
+                words += Convert(number / 1000) + " thousand ";
+                number %= 1000;
+            }
+
+            if ((number / 100) > 0)
+            {
+                words += Convert(number / 100) + " hundred ";
+                number %= 100;
+            }
+
+            if (number > 0)
+            {
+                if (words != "")
+                    words += "and ";
+
+                if (number < 20)
+                    words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += "-" + unitsMap[number % 10];
+                }
+            }
+
+            return words;
+        }
     }
-
-    public static string ConvertAmount(float amount)
-      => ConvertAmount(System.Convert.ToDouble(amount));
-    
-    public static string Convert(Int64 i)
-    {
-      if (i < 20)
-        return units[i];
-
-      if (i < 100)
-        return tens[i / 10] + ((i % 10 > 0) ? " " + Convert(i % 10) : "");
-
-      if (i < 1_000)
-        return units[i / 100] + " hundred"  
-            + ((i % 100 > 0) ? " and " + Convert(i % 100) : "");
-
-      if (i < 1_000_000)
-        return Convert(i / 1_000) + " thousand"
-            + ((i % 1_000 > 0) ? ", " + Convert(i % 1_000) : "");
-
-      if (i < 1_000_000_000)
-        return Convert(i / 1_000_000) + " million"  
-            + ((i % 1_000_000 > 0) ? ", " + Convert(i % 1_000_000) : "");
-
-      if (i < 1_000_000_000_000)
-        return Convert(i / 1_000_000_000) + " billion"  
-            + ((i % 1_000_000_000 > 0) ? ", " + Convert(i % 1_000_000_000) : "");
-
-      return Convert(i / 1_000_000_000_000) + " trillion"  
-          + ((i % 1_000_000_000_000 > 0) ? ", " + Convert(i % 1_000_000_000_000) : "");
-    }
-  }
 }

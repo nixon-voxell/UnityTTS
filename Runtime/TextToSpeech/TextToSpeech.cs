@@ -1,67 +1,70 @@
 using UnityEngine;
-using System.Threading;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using Voxell.Speech.Common;
 
 namespace Voxell.Speech.TTS
 {
-  public partial class TextToSpeech : MonoBehaviour
-  {
-    public AudioSource audioSource;
-    public Logger logger;
-
-    private int sampleLength;
-    private float[] _audioSample;
-    private AudioClip _audioClip;
-    private Thread _speakThread;
-    private bool _playAudio = false;
-
-    void Start()
+    public partial class TextToSpeech : MonoBehaviour
     {
-      InitTTSProcessor();
-      InitTTSInference();
-    }
+        public AudioSource audioSourceRef;
 
-    void Update()
-    {
-      if (_playAudio)
-      {
-        _audioClip = AudioClip.Create("Speak", sampleLength, 1, 22050, false);
-        _audioClip.SetData(_audioSample, 0);
-        audioSource.PlayOneShot(_audioClip);
-        _playAudio = false;
-      }
-    }
+        void Start()
+        {
+            InitTTSProcessor();
+            InitTTSInference();
+        }
 
-    void OnDestroy()
-    {
-      _speakThread?.Join();
-      Dispose();
-    }
+        void OnDestroy()
+        {
+            Dispose();
+        }
 
-    public void Speak(string text)
-    {
-      _speakThread?.Join();
-      _speakThread = new Thread(new ParameterizedThreadStart(SpeakTask));
-      _speakThread.Start(text);
-    }
+        public Task Speak(string text, float volume = 1f) => Task.Run(() => SpeakTask(text, volume));
 
-    private void SpeakTask(object inputText)
-    {
-      string text = inputText as string;
-      CleanText(ref text);
-      int[] inputIDs = TextToSequence(text);
-      float[,,] fastspeechOutput = FastspeechInference(ref inputIDs);
-      float[,,] melganOutput = MelganInference(ref fastspeechOutput);
+        private async Task SpeakTask(string text, float volume)
+        {
+            text = CleanText(text);
+            var inputIDs = TextToSequence(text);
+            var fastspeechOutput = FastspeechInference(ref inputIDs);
+            var melganOutput = MelganInference(ref fastspeechOutput);
 
-      sampleLength = melganOutput.GetLength(1);
-      _audioSample = new float[sampleLength];
-      for (int s=0; s < sampleLength; s++) _audioSample[s] = melganOutput[0, s, 0];
-      _playAudio = true;
-    }
+            var sampleLength = melganOutput.GetLength(1);
+            var audioSample = new float[sampleLength];
 
-    public void CleanText(ref string text)
-    {
-      text = text.ToLower();
-      // TODO: also convert numbers to words using the NumberToWords class
+            for (int s = 0; s < sampleLength; s++) 
+                audioSample[s] = melganOutput[0, s, 0];
+
+            volume = Mathf.Min(1f, Mathf.Max(0f, volume));
+            var completed = false;
+            UniTask.Post(async () =>
+            {
+                var audioClip = AudioClip.Create("Speak", sampleLength, 1, 22050, false);
+                    audioClip.SetData(audioSample, 0);
+
+                var audioSource = GameObject.Instantiate(audioSourceRef.gameObject, transform).GetComponent<AudioSource>();
+                    audioSource.volume = volume;
+                    audioSource.clip = audioClip;
+                    audioSource.Play();
+
+                var audioDuration = sampleLength * 1000 / 22050;
+                Debug.Log($"Duration = {audioDuration} ms, Volume = {volume}");
+                await UniTask.Delay(audioDuration);
+
+                Destroy(audioClip);
+                Destroy(audioSource.gameObject);
+
+                completed = true;
+            });
+            while (!completed)
+                await Task.Yield();
+        }
+
+        public string CleanText(string text)
+        {
+            text = text.ToLower();
+            text = NumberToWords.CleanText(text);
+            return text;
+        }
     }
-  }
 }
