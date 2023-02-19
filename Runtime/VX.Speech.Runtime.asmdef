@@ -2,9 +2,9 @@
     "name": "VX.Speech.Runtime",
     "rootNamespace": "",
     "references": [
-        "GUID:b23efe0d0bd83184681bd63517e3c327",
-        "GUID:6e1d47a1424c040aca79d8b6a2710888",
-        "GUID:40edeadb9ac5b04429c09420ca142019"
+        "GUID:5d380aad12070eb419c6e27b68ec6534",
+        "GUID:76e48071ae23d704ca4492f1136b6b47",
+        "GUID:6e1d47a1424c040aca79d8b6a2710888"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
