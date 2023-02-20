@@ -8,13 +8,12 @@
     "voxell"
   ],
   "license": "Apache 2.0",
-  "unity": "2019.4",
+  "unity": "2022.2",
   "unityRelease": "0f1",
   "version": "0.2.0",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
-    "voxell.util": "1.4.2",
-    "com.github.asus4.tflite": "2.4.1"
+    "voxell.util": "1.4.2"
   },
   "samples": [
     {
