@@ -1,5 +1,5 @@
 {
-  "name": "voxell.speech",
+  "name": "voxell.tts",
   "displayName": "VX TTS",
   "author": "Nixon",
   "description": "Text to speech engine for Unity.",
