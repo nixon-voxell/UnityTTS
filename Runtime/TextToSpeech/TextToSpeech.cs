@@ -33,13 +33,13 @@ namespace Voxell.Speech.TTS
 
     void OnDestroy()
     {
-      _speakThread?.Join();
+      _speakThread?.Abort();
       Dispose();
     }
 
     public void Speak(string text)
     {
-      _speakThread?.Join();
+      _speakThread?.Abort();
       _speakThread = new Thread(new ParameterizedThreadStart(SpeakTask));
       _speakThread.Start(text);
     }
