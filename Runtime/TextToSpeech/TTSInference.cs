@@ -17,16 +17,16 @@ namespace Voxell.Speech.TTS
 
     private Interpreter _fastspeechInterpreter;
     private Interpreter _melganInterpreter;
-    private InterpreterOptions _options;
 
     /// <summary>
     /// Create Fastspeech and Melgan interpreters
     /// </summary>
     void InitTTSInference()
     {
-      _options = new InterpreterOptions() {threads = 4};
-      _fastspeechInterpreter = new Interpreter(FileUtilx.ReadStreamingAssetFileByte(fastspeech), _options);
-      _melganInterpreter = new Interpreter(FileUtilx.ReadStreamingAssetFileByte(melgan), _options);
+      var fsOptions = new InterpreterOptions() {threads = 4};
+      var melGanOptions = new InterpreterOptions() {threads = 4};
+      _fastspeechInterpreter = new Interpreter(FileUtilx.ReadStreamingAssetFileByte(fastspeech), fsOptions);
+      _melganInterpreter = new Interpreter(FileUtilx.ReadStreamingAssetFileByte(melgan), melGanOptions);
     }
 
     #region Inferencing
@@ -100,10 +100,8 @@ namespace Voxell.Speech.TTS
 
     public void Dispose()
     {
-      // null check before disposing to prevent unity crashing
       _fastspeechInterpreter?.Dispose();
       _melganInterpreter?.Dispose();
-      _options?.Dispose();
     }
   }
 }
